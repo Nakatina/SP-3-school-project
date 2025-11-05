@@ -1,0 +1,78 @@
+@startuml
+title Streaming Service - Klassediagram
+
+' ===== ENUMS =====
+enum Category {
+  CRIME
+  WAR
+  DRAMA
+  FAMILY
+  ROMANCE
+  SCIFI
+}
+
+' ===== ABSTRACT BASE CLASS =====
+abstract class Media {
+  - title : String
+  - releaseYear : int
+  - rating : double
+  - category : Category
+  + getTitle() : String
+  + getCategory() : Category
+  + getRating() : double
+  + play() : void
+}
+
+class Movie extends Media {
+  + play() : void
+}
+
+class Series extends Media {
+  - seasons : List<Season>
+  + addSeason(season : Season) : void
+  + getSeasons() : List<Season>
+}
+
+class Season {
+  - seasonNumber : int
+  - episodes : List<Episode>
+  + addEpisode(ep : Episode) : void
+  + getEpisodes() : List<Episode>
+}
+
+class Episode {
+  - title : String
+  - duration : int
+  + play() : void
+}
+
+' ===== USER =====
+class User {
+  - username : String
+  - password : String
+  - watchedList : List<Movie>
+  - watchLaterList : List<Movie>
+  + addWatched(movie : Movie) : void
+  + addWatchLater(movie : Movie) : void
+  + removeWatchLater(movie : Movie) : void
+  + getWatchedList() : List<Movie>
+  + getWatchLaterList() : List<Movie>
+}
+
+' ===== SYSTEM / SERVICE =====
+class StreamingService {
+  - users : List<User>
+  - mediaLibrary : List<Media>
+  + registerUser(username : String, password : String) : User
+  + login(username : String, password : String) : User
+  + searchByTitle(title : String) : Media
+  + searchByCategory(cat : Category) : List<Movie>
+  + loadUsersFromFile() : void
+  + saveUsersToFile() : void
+}
+
+class FileHandler {
+  + loadUsers(filename : String) : List<User>
+  + saveUsers(filename : String, users : List<User>) : void
+}
+@enduml
