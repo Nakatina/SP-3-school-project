@@ -1,3 +1,3 @@
 public enum Category {
-    //TODO: Tilføj kategorier
+    CRIME, WAR, DRAMA, FAMILY, ROMANCE, SCIFI
 }
