@@ -1,2 +1,3 @@
-public class Category {
+public enum Category {
+    //TODO: Tilføj kategorier
 }
