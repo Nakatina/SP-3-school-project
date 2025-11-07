@@ -1,16 +1,6 @@
 @startuml
 title Streaming Service - Klassediagram
 
-' ===== ENUMS =====
-enum Category {
-  CRIME
-  WAR
-  DRAMA
-  FAMILY
-  ROMANCE
-  SCIFI
-}
-
 ' ===== ABSTRACT BASE CLASS =====
 abstract class Media {
   - title : String
