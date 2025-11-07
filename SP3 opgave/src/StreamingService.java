@@ -3,4 +3,5 @@ public class StreamingService {
     //TODO: Opret liste af medier
     //TODO: Implementer registrer og login
     //TODO:Implemteter search title pg kategori
+    //TODO: Print velkommen login / opret dig.
 }
