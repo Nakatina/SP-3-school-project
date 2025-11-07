@@ -9,7 +9,7 @@ public abstract class Media {
     String category;
 
     public Media(String title, int releaseYear, double rating, String category) {
-        this.title = title.trim();
+        this.title = title;
         this.releaseYear = releaseYear;
         this.rating = rating;
         this.category = category;
@@ -19,7 +19,7 @@ public abstract class Media {
     public String getTitle() { return title; }
     public int getReleaseYear() { return releaseYear; }
     public double getRating() { return rating; }
-    public category getCategory() { return category; }
+    public String getCategory() { return category; }
 
     public abstract void play(); // Play method to be overridden
 }
