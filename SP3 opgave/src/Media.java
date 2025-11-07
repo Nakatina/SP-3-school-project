@@ -1,13 +1,10 @@
 public abstract class Media {
-    //TODO: Opret Felter
-    //TODO: Lav konstruktør
-    //TODO: Tilføj getters
-    //TODO: Lav metode play()
     String title;
     int releaseYear;
     double rating;
     String category;
 
+//konstructor
     public Media(String title, int releaseYear, double rating, String category) {
         this.title = title;
         this.releaseYear = releaseYear;
