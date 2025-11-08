@@ -1,5 +1,8 @@
+import util.TextUI;
+import util.FileHandler;
+
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 //TODO: Opret username og password i en fil
 //TODO: Opret watchedList og watchLaterList
@@ -7,59 +10,18 @@ import java.util.Scanner;
 //TODO: Slette fra watchLaterList
 
 public class User {
-    private String name;
-    private String password;
     private ArrayList<Movie> watchedList = new ArrayList<>();
     private ArrayList<Movie> watchLaterList = new ArrayList<>();
+    TextUI ui = new TextUI();
+    private String username;
+    private String password;
+    String filePath = "data/users.txt";
 
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
+    public User(FileHandler fh) {
     }
 
-    //Vælg mellem at logge ind eller lave ny bruger
-    private boolean loginOrRegister(Scanner input) {
-        while (true) {
-            int chosenInput = input.nextInt();
-            input.nextLine();
-            //Login
-            if (chosenInput == 1) {
-                //TODO: få metoden til at skrive "Skriv dit brugernavn for at logge ind"
-                //TextUI
-                name = input.nextLine();
-                //TODO: få metoden til at skrive "skriv adgangskode"
-                //TextUI
-                password = input.nextLine();
-                return false;
-            }
-            //Opret bruger
-            else if (chosenInput == 2) {
-                //TODO: Opret navn
-                //TextUI
-                name = input.nextLine();
-                //TODO: Opret password
-                //TextUI
-                password = input.nextLine();
-                String msgToUser = addUser(name, password);
-                //TODO: udskriv msgToUser
-                //TextUI
-                return false;
-
-            } else {
-                //TODO: Giv fejlmeddelselse
-                //TextUI
-            }
-
-        }
-    }
-
-    private String addUser(String name, String password) {
-        this.name = name;
-        this.password = password;
-        //TODO: Return en success eller failure
-        //return TextUI
-        //Placeholder
-        return name;
+    public void createUsernameAndPassword(String username, String password, FileHandler fh) {
+        fh.twoStringFileWriter(username, password, filePath);
     }
 
     public void addWatchedMovies(Movie movie) {
@@ -69,4 +31,23 @@ public class User {
 
     }
 
+    public boolean authenticateUser(String username, String password, FileHandler fh) {
+        return fh.checkMatchFile(filePath, 0, username, 1, password, 2);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
