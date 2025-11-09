@@ -4,7 +4,7 @@ import util.FileHandler;
 import java.util.ArrayList;
 
 
-//TODO: Opret username og password i en fil
+//TODO: Opret username og password i en fil TJEK
 //TODO: Opret watchedList og watchLaterList
 //TODO: Implementer gettes for listerne
 //TODO: Slette fra watchLaterList
@@ -21,7 +21,8 @@ public class User {
     }
 
     public void createUsernameAndPassword(String username, String password, FileHandler fh) {
-        fh.twoStringFileWriter(username, password, filePath);
+       String usernameAndPassword = username + ";" + password;
+        fh.stringFileWriter(filePath, usernameAndPassword);
     }
 
     public void addWatchedMovies(Movie movie) {
