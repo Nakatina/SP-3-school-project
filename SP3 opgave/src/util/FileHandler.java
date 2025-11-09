@@ -18,27 +18,33 @@ public class FileHandler {
     TextUI ui = new TextUI();
     File file;
 
-    public void stringFileWriter(String filePath, String... writeInput) {
+
+    public Path getFile(String... fileName) {
+        String baseDirectory = System.getProperty("user.dir");
+        return Paths.get((baseDirectory), fileName);
+    }
+
+    public boolean stringFileWriter(Path filePath, String... writeInput) {
 
         try {
-            writer = new FileWriter(filePath, true);
+            writer = new FileWriter(filePath.toFile(), true);
             for (String s : writeInput) {
                 writer.write(s + System.lineSeparator());
-
+                return true;
             }
             writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return false;
     }
 
-    public List<String> returnFile(String filePath) {
+    public List<String> returnFile(Path filePath) {
         try {
-            path = Paths.get(filePath);
-            if (Files.notExists(path)) {
+            if (Files.notExists(filePath)) {
                 return new ArrayList<>();
             } else {
-                return Files.readAllLines(path);
+                return Files.readAllLines(filePath);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -46,16 +52,15 @@ public class FileHandler {
 
     }
 
-    public boolean checkFile(String checkPlace, String filePath, int lengthOfSplitLine, int checkThisArrayPlace) {
+    public boolean checkFile(Path filePath, String checkPlace, int lengthOfSplitLine, int checkThisArrayPlace) {
         List<String> listOfFile;
         try {
-            path = Paths.get(filePath); //Tager filstien
             //Hvis de ikke eksisterer retunerer den false og skriver fejlmeddelselse
-            if (Files.notExists(path)) {
+            if (Files.notExists(filePath)) {
                 ui.displayMsg("Fejl i checkFile(Slet dette)");
                 return false;
             }
-            listOfFile = Files.readAllLines(Path.of(filePath)); //Læser alle linjer i filen
+            listOfFile = Files.readAllLines(Path.of(filePath.toString())); //Læser alle linjer i filen
 
             //Splitter alle linjerne i filen og tjekker om "checkForThis" indgår i filen
             for (String s : listOfFile) {
@@ -71,18 +76,17 @@ public class FileHandler {
         return false;
     }
 
-    public boolean checkMatchFile(String filePath,
+    public boolean checkMatchFile(Path filePath,
                                   int colA, String valA,
                                   int colB, String valB,
                                   int minColumn) {
         List<String> listOfFile;
         try {
-            path = Paths.get(filePath);
-            if (Files.notExists(path)) {
+            if (Files.notExists(filePath)) {
                 ui.displayMsg("Filen findes ikke(Slet dette)");
                 return false;
             }
-            listOfFile = Files.readAllLines(Path.of(filePath));
+            listOfFile = Files.readAllLines(Path.of(filePath.toString()));
             for (String s : listOfFile) {
                 String[] strings = s.split(";");
                 if (strings.length >= minColumn) {
@@ -99,30 +103,29 @@ public class FileHandler {
         return false;
     }
 
-    public void findOrCreateAndWriteFile(String inputCheck, String filePath,
-                                         int lengthOfSplitLine, int checkThisArrayPlace, String... msg) {
-        file = new File(filePath);
+    public void findOrCreateAndWriteFile(Path filePath, String inputCheck,
+                                         int lengthOfSplitLine, int checkThisArrayPlace,
+                                         String... msg) {
+        file = new File(String.valueOf(filePath));
         boolean checkedfile =
-                checkFile(inputCheck, filePath, lengthOfSplitLine, checkThisArrayPlace);
+                checkFile(filePath, inputCheck, lengthOfSplitLine, checkThisArrayPlace);
 
         try {
-            //Laver ny fil hvis der ikke findes en
-            path = Paths.get(filePath);
             //Hvis den givne mappe ikke findes, bliver den oprettet
-            if (path.getParent() != null) {
-                Files.createDirectories(path.getParent());
+            if (filePath.getParent() != null) {
+                Files.createDirectories(filePath.getParent());
             }
             //Hvis filen ikke findes bliver den lavet, og der bliver skrevet i den
-            if (Files.notExists(path)) {
-                Files.createFile(path);
-                stringFileWriter(inputCheck, filePath);
+            if (Files.notExists(filePath)) {
+                Files.createFile(filePath);
+                stringFileWriter(filePath, inputCheck);
                 ui.displayMsg("findOrCreateAndWriteFile created new file (Slet dette)");
                 //Hvis filen findes, tjekkes der for det der vil tilføjes, og gives en msg, msg kan være tom, eller flere strings
             } else if (checkedfile) {
                 for (String s : msg) {
                     ui.displayMsg(s);
                 }
-            } else stringFileWriter(inputCheck, filePath);
+            } else stringFileWriter(filePath, inputCheck);
 
             {
             }
