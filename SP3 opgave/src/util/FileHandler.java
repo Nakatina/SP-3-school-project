@@ -1,6 +1,7 @@
 package util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 public class FileHandler {
     //TODO: Metode til loadUsers() der læser brugere fra txt-fil LAVET METODE DER LÆSER ALT I EN FIL
@@ -103,6 +105,20 @@ public class FileHandler {
         return false;
     }
 
+    public static void readMoviesFromTxt(String path){
+        try {
+            File file = new File(path); //peger på txt filen
+
+            Scanner input = new Scanner(file); //læser teksten i file (som peger på txt)
+
+            while (input.hasNextLine()){ //så længe der er en ny linje bliver den læst
+                String line = input.nextLine();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Kunne ikke læse filen");
+        }
+    }
+
     public void findOrCreateAndWriteFile(Path filePath, String inputCheck,
                                          int lengthOfSplitLine, int checkThisArrayPlace,
                                          String... msg) {
@@ -133,7 +149,9 @@ public class FileHandler {
             throw new RuntimeException(e);
         }
     }
-}
+
+    }
+
 
 
 

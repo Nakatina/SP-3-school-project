@@ -4,13 +4,17 @@
 import util.TextUI;
 import util.FileHandler;
 
+import java.util.Scanner;
+
 public class ConsoleApp {
     TextUI ui = new TextUI();
     FileHandler fh = new FileHandler();
     User user = new User(fh);
     util.FileHandler fileHandler = new util.FileHandler();
+    StreamingService Fletnix = new StreamingService();
 
     public void startProgram() {
+        Fletnix.addToLibrary();
         startMsg();
         if (!checkDoLoginOrRegister()) {
             return;
@@ -55,11 +59,28 @@ public class ConsoleApp {
         boolean checkNameAndPassword = user.authenticateUser(usernameInput, passwordInput, fh);
         if (checkNameAndPassword) {
             ui.displayMsg("Login successful!");
+            doSearch();
             return true;
         }
         ui.displayMsg("Brugernavn eller password forkert!");
         return false;
+    }
 
+    public void doSearch() {
+            boolean found = false;
+
+            String searchWord = ui.promptText("Hvilken film vil du se? Søg efter filmtitel:").toLowerCase();
+
+        for (Media m : Fletnix.getMediaLibrary()){
+                if (m.getTitle().equalsIgnoreCase(searchWord)){
+                    ui.displayMsg("Afspiller nu filmen " + searchWord);
+                    found = true;
+            }
+        }
+            if (!found) {
+                ui.displayMsg("Ingen film med titlen " + searchWord + " blev fundet. Prøv igen.");
+                doSearch();
+            }
     }
 
     private void doRegister() {
@@ -74,5 +95,7 @@ public class ConsoleApp {
         ui.displayMsg("2: Opret bruger");
         ui.displayMsg("3: Afslut");
     }
+
+
 
 }
