@@ -31,7 +31,7 @@ public class TextUI {
     public int promptNumeric(String msg){
         displayMsg(msg); //stille bruger spørgsmål
         String input = sc.nextLine(); //Giver bruger et sted at svare og vente på svar
-        int numInput = Integer.parseInt(input); //skulle konvertere det input til et tal
+        int numInput = Integer.parseInt(input); //skulle konvertere det indput til et tal
 
         return numInput;
     }
