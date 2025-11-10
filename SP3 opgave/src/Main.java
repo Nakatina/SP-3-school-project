@@ -1,8 +1,13 @@
 import java.io.Console;
+import java.io.File;
+
+import static util.FileHandler.readMoviesFromTxt;
 
 public class Main {
 
     public static void main(String[] args){
+        readMoviesFromTxt("SP3 opgave/data/film.txt");
+
         ConsoleApp console = new ConsoleApp();
         //TODO: Udskriv velkomsttest
         //TODO: Indlæs brugere og medier
@@ -11,6 +16,9 @@ public class Main {
         //TODO: SIDTE DEL AF KODNINGEN! Login gemmes i extern fil
         //TODO: VALGTFRIT EXTRA: Grafisk brugerflade
         console.startProgram();
+
+
+
 
     }
 
