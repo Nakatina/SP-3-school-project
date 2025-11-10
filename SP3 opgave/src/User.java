@@ -17,7 +17,7 @@ public class User {
     FileHandler fileHandler = new FileHandler();
     private String username;
     private String password;
-     Path filePath = fileHandler.getFile("SP3 opgave/", "data/","users.txt");
+    Path filePath = fileHandler.getFile("SP3 opgave/", "data/","users.txt");
 
     public User(FileHandler fh) {
     }
