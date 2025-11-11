@@ -1,12 +1,8 @@
-import java.io.Console;
-import java.io.File;
-
-import static util.FileHandler.readMoviesFromTxt;
+import static util.FileHandler.readFile;
 
 public class Main {
 
     public static void main(String[] args){
-        readMoviesFromTxt("SP3 opgave/data/film.txt");
 
         ConsoleApp console = new ConsoleApp();
         //TODO: Udskriv velkomsttest

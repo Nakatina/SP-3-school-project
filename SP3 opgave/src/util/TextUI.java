@@ -7,7 +7,7 @@ public class TextUI {
 
     private static Scanner sc = new Scanner(System.in);
 
-    public ArrayList<String> promptChoice(ArrayList<String> options, int limit, String msg){
+    public ArrayList<String> promptChoice(ArrayList<String> options, int limit, String... msg){
         displayMsg(msg);
         displayList(options, "");
         ArrayList<String> choices = new ArrayList<>(); //til at lave beholder til at gemme brugerens valg
@@ -19,7 +19,7 @@ public class TextUI {
         return choices;
     }
 
-    public void displayList(ArrayList<String>list, String msg){
+    public void displayList(ArrayList<String> list, String msg){
         for (int i = 0; i <list.size(); i++){
             System.out.println(i+1+". "+list.get(i));
         }

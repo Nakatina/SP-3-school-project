@@ -106,17 +106,15 @@ public class FileHandler {
         return false;
     }
 
-    public static void readMoviesFromTxt(String path){
+    public static void readFile(Path path){
         try {
-            File file = new File(path); //peger på txt filen
-
-            Scanner input = new Scanner(file); //læser teksten i file (som peger på txt)
+            Scanner input = new Scanner(path); //læser teksten i file (som peger på txt)
 
             while (input.hasNextLine()){ //så længe der er en ny linje bliver den læst
                 String line = input.nextLine();
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("Kunne ikke læse filen");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

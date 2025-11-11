@@ -13,23 +13,53 @@ public class ConsoleApp {
     User user = new User(fh);
     StreamingService Fletnix = new StreamingService();
 
-    Path filePathFilm = fh.getFile("SP3 opgave/"+"data/"+ "film.txt");
+    Path filePathFilm = fh.getFile("SP3 opgave/" + "data/" + "film.txt");
 
     public void startProgram() {
-       // Fletnix.addToLibrary();
+        // Fletnix.addToLibrary();
         startMsg();
         if (!checkDoLoginOrRegister()) {
             startProgram();
             return;
         }
-       String chosenMovie = ui.promptText("Hvilken film vil du se?");
+        doCategoryOrMovie();
+/*
+        String chosenMovie = ui.promptText("Hvilken film vil du se?");
 
         if (fh.checkFile(filePathFilm, chosenMovie, 4, 0)) {
             ui.displayMsg(chosenMovie + " afspilles nu...");
         } else {
             ui.displayMsg("Filmen findes ikke");
         }
+*/
+    }
 
+    private void doCategoryOrMovie() {
+        int choice = ui.promptNumeric("1. Vælg kategori", "2. Søg efter film", "3. Afslut");
+        while ((choice != 1) && (choice != 2) && (choice != 3)) {
+            ui.displayMsg("Indtast korrekt valg: ");
+        }
+        if (choice == 1) {
+            doCategory();
+        }
+        if (choice == 2) {
+            doMovie();
+        } else return;
+
+    }
+
+    private void doCategory() {
+
+    }
+
+    private void doMovie() {
+        String chosenMovie = ui.promptText("Hvilken film vil du se?");
+
+        if (fh.checkFile(filePathFilm, chosenMovie, 4, 0)) {
+            ui.displayMsg(chosenMovie + " afspilles nu...");
+        } else {
+            ui.displayMsg("Filmen findes ikke");
+        }
     }
 
     private boolean checkDoLoginOrRegister() {
@@ -46,12 +76,6 @@ public class ConsoleApp {
         }
         ui.displayMsg("Farvel...");
         return false;
-    }
-
-    private int doFilmOrSeries() {
-        return ui.promptNumeric("==== Velkommen! ====", "1. Se film", "2. Se serier");
-
-
     }
 
     private boolean doLoginOrRegister(int choice) {
