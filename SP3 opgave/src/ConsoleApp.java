@@ -12,6 +12,7 @@ public class ConsoleApp {
     FileHandler fh = new FileHandler();
     User user = new User(fh);
     StreamingService Fletnix = new StreamingService();
+    Movie movie = new Movie();
 
     Path filePathFilm = fh.getFile("SP3 opgave/" + "data/" + "film.txt");
 
@@ -23,15 +24,6 @@ public class ConsoleApp {
             return;
         }
         doCategoryOrMovie();
-/*
-        String chosenMovie = ui.promptText("Hvilken film vil du se?");
-
-        if (fh.checkFile(filePathFilm, chosenMovie, 4, 0)) {
-            ui.displayMsg(chosenMovie + " afspilles nu...");
-        } else {
-            ui.displayMsg("Filmen findes ikke");
-        }
-*/
     }
 
     private void doCategoryOrMovie() {
@@ -43,23 +35,13 @@ public class ConsoleApp {
             doCategory();
         }
         if (choice == 2) {
-            doMovie();
-        } else return;
+            movie.doMovie();
+        } return;
 
     }
 
     private void doCategory() {
 
-    }
-
-    private void doMovie() {
-        String chosenMovie = ui.promptText("Hvilken film vil du se?");
-
-        if (fh.checkFile(filePathFilm, chosenMovie, 4, 0)) {
-            ui.displayMsg(chosenMovie + " afspilles nu...");
-        } else {
-            ui.displayMsg("Filmen findes ikke");
-        }
     }
 
     private boolean checkDoLoginOrRegister() {

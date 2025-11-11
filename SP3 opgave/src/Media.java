@@ -12,6 +12,10 @@ public abstract class Media {
         this.category = category;
     }
 
+    public Media() {
+
+    }
+
     // Getters
     public String getTitle() { return title; }
     public int getReleaseYear() { return releaseYear; }
