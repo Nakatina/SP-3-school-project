@@ -1,5 +1,6 @@
 import java.io.Console;
 import java.io.File;
+import util.FileHandler;
 
 import static util.FileHandler.readMoviesFromTxt;
 
@@ -20,6 +21,9 @@ public class Main {
 
 
 
+    }
+
+    private static void readMoviesFromTxt(String s) {
     }
 
 }

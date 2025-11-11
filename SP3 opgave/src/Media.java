@@ -1,24 +1,35 @@
-public abstract class Media {
-    String title;
-    int releaseYear;
-    double rating;
-    String category;
+import java.util.ArrayList;
 
-//konstructor
-    public Media(String title, int releaseYear, double rating, String category) {
+public abstract class Media {
+    // Felter som alle medier har
+    protected String title;
+    protected int releaseYear;
+    protected double rating;
+    protected ArrayList<String> category;
+
+    //konstructor
+    public Media(String title, int releaseYear, double rating, ArrayList<String> category) {
         this.title = title;
         this.releaseYear = releaseYear;
         this.rating = rating;
         this.category = category;
     }
 
-    // Getters
-    public String getTitle() { return title; }
-    public int getReleaseYear() { return releaseYear; }
-    public double getRating() { return rating; }
-    public String getCategory() { return category; }
-
-    public abstract void play(); // Play method to be overridden
+    // Getters (bruges til at hente data andre steder i programmet)
+    public String getTitle() {
+        return title;
+    }
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+    public double getRating() {
+        return rating;
+    }
+    public String getCategory() {
+        return category;
+    }
+// Abstrakt metode som skal implemeteres i underklasser (Movies og Series)
+    public abstract void play();
 }
 
 
