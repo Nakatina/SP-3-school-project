@@ -1,6 +1,3 @@
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Scanner;
 import java.nio.file.Path;
 
 import util.*;
@@ -24,7 +21,12 @@ public class Movie extends Media {
         String chosenMovie = textUI.promptText("Hvilken film vil du se?");
 
         if (fh.checkFile(filePathFilm, chosenMovie, 4, 0)) {
-            textUI.displayMsg(chosenMovie + " afspilles nu...");
+            var choice = chooseWatchOrAdd();
+            if (choice == 1) {
+                textUI.displayMsg(chosenMovie + " afspilles nu...");
+            } else if (choice == 2) {
+                textUI.displayMsg("Lav metode der tilføjer filmen til en liste");
+            }
         } else {
             textUI.displayMsg("Filmen findes ikke");
         }
