@@ -14,7 +14,7 @@ public class ConsoleApp {
     StreamingService Fletnix = new StreamingService();
 
     public void startProgram() {
-        Fletnix.addToLibrary();
+       // Fletnix.addToLibrary();
         startMsg();
         if (!checkDoLoginOrRegister()) {
             return;
