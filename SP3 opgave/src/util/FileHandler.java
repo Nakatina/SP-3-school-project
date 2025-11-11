@@ -32,13 +32,12 @@ public class FileHandler {
             writer = new FileWriter(filePath.toFile(), true);
             for (String s : writeInput) {
                 writer.write(s + System.lineSeparator());
-                return true;
             }
             writer.close();
+            return true;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return false;
         }
-        return false;
     }
 
     public List<String> returnFile(Path filePath) {
@@ -106,11 +105,11 @@ public class FileHandler {
         return false;
     }
 
-    public static void readFile(Path path){
+    public static void readFile(Path path) {
         try {
             Scanner input = new Scanner(path); //læser teksten i file (som peger på txt)
 
-            while (input.hasNextLine()){ //så længe der er en ny linje bliver den læst
+            while (input.hasNextLine()) { //så længe der er en ny linje bliver den læst
                 String line = input.nextLine();
             }
         } catch (IOException e) {
@@ -149,7 +148,7 @@ public class FileHandler {
         }
     }
 
-    }
+}
 
 
 

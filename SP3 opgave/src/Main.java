@@ -1,4 +1,4 @@
-import static util.FileHandler.readFile;
+import util.FileHandler;
 
 public class Main {
 

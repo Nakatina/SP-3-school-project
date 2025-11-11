@@ -24,7 +24,11 @@ public class User {
 
     public boolean createUsernameAndPassword(String username, String password, FileHandler fh) {
        String usernameAndPassword = username + ";" + password;
-        return fh.stringFileWriter(filePath, usernameAndPassword);
+       if  (!fh.stringFileWriter(filePath, usernameAndPassword)){
+           ui.displayMsg("Noget gik galt ved oprettelse af bruger");
+           return false;
+       }
+        return true;
     }
 
     public void addWatchedMovies(Movie movie) {

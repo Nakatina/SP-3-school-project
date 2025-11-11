@@ -122,7 +122,7 @@ public class ConsoleApp {
         boolean b = user.createUsernameAndPassword(usernameInput, passwordInput, fh);
         if (b) {
             ui.displayMsg("Register succesfuld!");
-            return true;
+            return doLogin();
         } else ui.displayMsg("Noget gik galt med registrering.");
         return false;
     }
