@@ -16,13 +16,19 @@ public class ConsoleApp {
     Path filePathFilm = fh.getFile("SP3 opgave/"+"data/"+ "film.txt");
 
     public void startProgram() {
-        // Fletnix.addToLibrary();
        // Fletnix.addToLibrary();
         startMsg();
         if (!checkDoLoginOrRegister()) {
+            startProgram();
             return;
         }
-        fh.checkFile(filePathFilm, ui.promptText("Hvilken film vil du se"), 4, 0);
+       String chosenMovie = ui.promptText("Hvilken film vil du se?");
+
+        if (fh.checkFile(filePathFilm, chosenMovie, 4, 0)) {
+            ui.displayMsg(chosenMovie + " afspilles nu...");
+        } else {
+            ui.displayMsg("Filmen findes ikke");
+        }
 
     }
 
