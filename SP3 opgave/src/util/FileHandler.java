@@ -39,7 +39,18 @@ public class FileHandler {
             return false;
         }
     }
-
+    public void createFileAndPath(Path filePath){
+        try  {
+            if (filePath.getParent() != null) {
+                Files.createDirectories(filePath.getParent());
+            }
+            if(!Files.exists(filePath)){
+                Files.createFile(filePath);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public List<String> returnFile(Path filePath) {
         try {
             if (Files.notExists(filePath)) {

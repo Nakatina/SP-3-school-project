@@ -17,17 +17,29 @@ public class User {
     FileHandler fileHandler = new FileHandler();
     private String username;
     private String password;
-    Path filePath = fileHandler.getFile("SP3 opgave/", "data/","users.txt");
+    Path filePath = fileHandler.getFile("SP3 opgave/", "data/", "users.txt");
 
     public User(FileHandler fh) {
     }
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public void createUserFiles(String nameOfUser) {
+
+        Path watchedFilePath = fileHandler.getFile("SP3 opgave/", "data/", "userdata/", nameOfUser, "watched movies.txt");
+        Path watchLaterFilePath = fileHandler.getFile("SP3 opgave/", "data/", "userdata/", nameOfUser, "watch later movies.txt");
+        fileHandler.createFileAndPath(watchedFilePath);
+        fileHandler.createFileAndPath(watchLaterFilePath);
+    }
 
     public boolean createUsernameAndPassword(String username, String password, FileHandler fh) {
-       String usernameAndPassword = username + ";" + password;
-       if  (!fh.stringFileWriter(filePath, usernameAndPassword)){
-           ui.displayMsg("Noget gik galt ved oprettelse af bruger");
-           return false;
-       }
+        String usernameAndPassword = username + ";" + password;
+        if (!fh.stringFileWriter(filePath, usernameAndPassword)) {
+            ui.displayMsg("Noget gik galt ved oprettelse af bruger");
+            return false;
+        }
         return true;
     }
 

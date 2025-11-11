@@ -5,15 +5,15 @@ import util.TextUI;
 import util.FileHandler;
 
 import java.nio.file.Path;
-import java.util.Scanner;
 
 public class ConsoleApp {
-    TextUI ui = new TextUI();
-    FileHandler fh = new FileHandler();
-    User user = new User(fh);
-    StreamingService Fletnix = new StreamingService();
-    Movie movie = new Movie();
-
+    private TextUI ui = new TextUI();
+    private FileHandler fh = new FileHandler();
+    private User u = new User(fh);
+    private StreamingService Fletnix = new StreamingService();
+    private Movie m = new Movie(fh);
+    private User user;
+    private Movie movie;
     Path filePathFilm = fh.getFile("SP3 opgave/" + "data/" + "film.txt");
 
     public void startProgram() {
@@ -35,8 +35,9 @@ public class ConsoleApp {
             doCategory();
         }
         if (choice == 2) {
-            movie.doMovie();
-        } return;
+            m.doMovie();
+        }
+        return;
 
     }
 
@@ -73,12 +74,18 @@ public class ConsoleApp {
         String usernameInput = ui.promptText("Skriv brugernavn");
         String passwordInput = ui.promptText("Skriv adgangskode");
 
-        if (user.authenticateUser(usernameInput, passwordInput, fh)) {
+        if (u.authenticateUser(usernameInput, passwordInput, fh)) {
             ui.displayMsg("Login successful!");
+            createNewUserAndMovie(usernameInput, passwordInput);
             return true;
         }
         ui.displayMsg("Brugernavn eller password forkert!");
         return false;
+    }
+
+    private void createNewUserAndMovie(String username, String password) {
+        User user = new User(username, password);
+        Movie movie = new Movie(user);
     }
 
     public void doSearch() {
@@ -101,9 +108,10 @@ public class ConsoleApp {
     private boolean doRegister() {
         String usernameInput = ui.promptText("Opret brugernavn");
         String passwordInput = ui.promptText("Opret adgangskode");
-        boolean b = user.createUsernameAndPassword(usernameInput, passwordInput, fh);
+        boolean b = u.createUsernameAndPassword(usernameInput, passwordInput, fh);
         if (b) {
             ui.displayMsg("Register succesfuld!");
+            u.createUserFiles(usernameInput);
             return doLogin();
         } else ui.displayMsg("Noget gik galt med registrering.");
         return false;
