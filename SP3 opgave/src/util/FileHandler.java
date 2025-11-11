@@ -23,7 +23,7 @@ public class FileHandler {
 
     public Path getFile(String... fileName) {
         String baseDirectory = System.getProperty("user.dir");
-        return Paths.get((baseDirectory), fileName);
+        return Paths.get(baseDirectory, fileName);
     }
 
     public boolean stringFileWriter(Path filePath, String... writeInput) {
@@ -58,7 +58,8 @@ public class FileHandler {
         List<String> listOfFile;
         try {
             //Hvis de ikke eksisterer retunerer den false og skriver fejlmeddelselse
-            if (Files.notExists(filePath)) {
+            if (!Files.exists(filePath)) {
+                ui.displayMsg(filePath.toString() + " eksisterer ikke");
                 ui.displayMsg("Fejl i checkFile(Slet dette)");
                 return false;
             }
@@ -88,10 +89,10 @@ public class FileHandler {
                 ui.displayMsg("Filen findes ikke(Slet dette)");
                 return false;
             }
-            listOfFile = Files.readAllLines(Path.of(filePath.toString()));
+            listOfFile = Files.readAllLines(filePath); //Path.of(filePath.toString())
             for (String s : listOfFile) {
                 String[] strings = s.split(";");
-                if (strings.length >= minColumn) {
+                if (strings.length >= minColumn) { // [0] = Mikkel [1] = 123
                     boolean a = strings[colA].equals(valA); //Tjekker kolonne A for value A
                     boolean b = strings[colB].equals(valB); //Tjekker kolonne B for value B
                     if (a && b) {

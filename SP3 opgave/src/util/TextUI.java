@@ -1,6 +1,7 @@
 package util;
 //--- Hjælpemetoder og filhåndtering ---
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 public class TextUI {
 
@@ -24,11 +25,13 @@ public class TextUI {
         }
     }
 
-    public void displayMsg(String msg){
-        System.out.println(msg);
+    public void displayMsg(String... msg){
+        for(String s : msg){
+            System.out.println(s);
+        }
     }
 
-    public int promptNumeric(String msg){
+    public int promptNumeric(String... msg){
         displayMsg(msg); //stille bruger spørgsmål
         String input = sc.nextLine(); //Giver bruger et sted at svare og vente på svar
         int numInput = Integer.parseInt(input); //skulle konvertere det indput til et tal
@@ -36,7 +39,7 @@ public class TextUI {
         return numInput;
     }
 
-    public boolean promptBinary(String msg){ //Giver brugeren mulighed for ja / Nej Spørgsmål
+    public boolean promptBinary(String... msg){ //Giver brugeren mulighed for ja / Nej Spørgsmål
         displayMsg(msg);
         String input = sc.nextLine();
         if(input.equalsIgnoreCase("Y")){
@@ -51,8 +54,7 @@ public class TextUI {
     }
     public String promptText(String msg){
         displayMsg(msg);
-        String input = sc.nextLine();
-        return input;
+        return sc.nextLine();
     }
 
 }

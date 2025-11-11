@@ -22,9 +22,9 @@ public class User {
     public User(FileHandler fh) {
     }
 
-    public void createUsernameAndPassword(String username, String password, FileHandler fh) {
+    public boolean createUsernameAndPassword(String username, String password, FileHandler fh) {
        String usernameAndPassword = username + ";" + password;
-        fh.stringFileWriter(filePath, usernameAndPassword);
+        return fh.stringFileWriter(filePath, usernameAndPassword);
     }
 
     public void addWatchedMovies(Movie movie) {
