@@ -11,21 +11,44 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+/**
+ * FileHandler-klassen står for al håndtering af filer i programmet.
+ * Den kan oprette, læse, skrive og tjekke filer samt oprette nødvendige mapper.
+ * Klassen bruges bl.a. til at gemme og hente brugere, film og andre data fra .txt-filer.
+ */
+
 public class FileHandler {
-    //TODO: Metode til loadUsers() der læser brugere fra txt-fil LAVET METODE DER LÆSER ALT I EN FIL
-    //TODO: Metode til saveUsers() der gemmer brugere i txt-fil TJEK
-    //TODO: Overvej fejlhåndtering
+    // Writer bruges til at skrive til filer
     FileWriter writer;
+
+    // Generisk Path-objekt, bruges til midlertidig reference af filstier
     Path path;
+
+    //Tekstbrugerflade til udskrivning af fejl- og statusbeskeder
     TextUI ui = new TextUI();
+    // File-objekt, bruges i forbindelse med findOrCreateAndWriteFile-metoden
     File file;
 
-
+    /**
+     * Opretter et {@link Path} objekt ud fra et eller flere stinavne.
+     * Bruges til at samle delstier til en fuld sti under projektets rodmappe.
+     *
+     * @param fileName Ét eller flere elementer i stien (fx "data", "users.txt")
+     * @return En {@link Path} repræsentation af den samlede sti
+     */
     public Path getFile(String... fileName) {
         String baseDirectory = System.getProperty("user.dir");
         return Paths.get(baseDirectory, fileName);
     }
-
+    /**
+     * Skriver én eller flere linjer tekst til en fil.
+     * Hvis filen ikke findes, antages det at den allerede er oprettet.
+     * Hver linje afsluttes med systemets line separator.
+     *
+     * @param filePath   Stien til filen
+     * @param writeInput En eller flere tekstlinjer, der skal skrives
+     * @return {@code true} hvis der blev skrevet uden fejl, ellers {@code false}
+     */
     public boolean stringFileWriter(Path filePath, String... writeInput) {
 
         try {
@@ -39,6 +62,13 @@ public class FileHandler {
             return false;
         }
     }
+    /**
+     * Sørger for at mappen og filen eksisterer.
+     * Hvis mappen ikke findes, bliver den oprettet.
+     * Hvis filen ikke findes, bliver den oprettet.
+     *
+     * @param filePath Stien til filen der skal sikres eksisterer
+     */
     public void createFileAndPath(Path filePath){
         try  {
             if (filePath.getParent() != null) {
@@ -51,9 +81,16 @@ public class FileHandler {
             e.printStackTrace();
         }
     }
+    /**
+     * Læser alle linjer i en fil og returnerer dem som en liste.
+     * Hvis filen ikke findes, returneres en tom liste.
+     *
+     * @param filePath Stien til filen der skal læses
+     * @return En {@link List} af tekstlinjer, eller en tom liste hvis filen ikke findes
+     */
     public List<String> returnFile(Path filePath) {
         try {
-            if (Files.notExists(filePath)) {
+            if (true == Files.notExists(filePath)) {
                 return new ArrayList<>();
             } else {
                 return Files.readAllLines(filePath);
@@ -63,7 +100,16 @@ public class FileHandler {
         }
 
     }
-
+    /**
+     * Tjekker om et givent element findes i en tekstfil.
+     * Linjer splittes med ';' og der søges efter et bestemt element på en given position i split-arrayet.
+     *
+     * @param filePath            Stien til filen
+     * @param checkPlace          Den tekst der skal søges efter
+     * @param lengthOfSplitLine   Minimumslængden på den splittede linje
+     * @param checkThisArrayPlace Den position i arrayet hvor der skal søges
+     * @return {@code true} hvis elementet findes, ellers {@code false}
+     */
     public boolean checkFile(Path filePath, String checkPlace, int lengthOfSplitLine, int checkThisArrayPlace) {
         List<String> listOfFile;
         try {
@@ -88,14 +134,25 @@ public class FileHandler {
         }
         return false;
     }
-
+    /**
+     * Tjekker om to værdier matcher i samme linje i en fil.
+     * Fx bruges denne til at tjekke brugernavn og password på samme linje.
+     *
+     * @param filePath  Stien til filen
+     * @param colA      Kolonne A der skal tjekkes
+     * @param valA      Værdi for kolonne A
+     * @param colB      Kolonne B der skal tjekkes
+     * @param valB      Værdi for kolonne B
+     * @param minColumn Minimum antal kolonner der skal være i linjen
+     * @return {@code true} hvis begge værdier findes på samme linje, ellers {@code false}
+     */
     public boolean checkMatchFile(Path filePath,
                                   int colA, String valA,
                                   int colB, String valB,
                                   int minColumn) {
         List<String> listOfFile;
         try {
-            if (Files.notExists(filePath)) {
+            if (true == Files.notExists(filePath)) {
                 ui.displayMsg("Filen findes ikke(Slet dette)");
                 return false;
             }
@@ -127,38 +184,6 @@ public class FileHandler {
             throw new RuntimeException(e);
         }
     }
-
-    public void findOrCreateAndWriteFile(Path filePath, String inputCheck,
-                                         int lengthOfSplitLine, int checkThisArrayPlace,
-                                         String... msg) {
-        file = new File(String.valueOf(filePath));
-        boolean checkedfile =
-                checkFile(filePath, inputCheck, lengthOfSplitLine, checkThisArrayPlace);
-
-        try {
-            //Hvis den givne mappe ikke findes, bliver den oprettet
-            if (filePath.getParent() != null) {
-                Files.createDirectories(filePath.getParent());
-            }
-            //Hvis filen ikke findes bliver den lavet, og der bliver skrevet i den
-            if (Files.notExists(filePath)) {
-                Files.createFile(filePath);
-                stringFileWriter(filePath, inputCheck);
-                ui.displayMsg("findOrCreateAndWriteFile created new file (Slet dette)");
-                //Hvis filen findes, tjekkes der for det der vil tilføjes, og gives en msg, msg kan være tom, eller flere strings
-            } else if (checkedfile) {
-                for (String s : msg) {
-                    ui.displayMsg(s);
-                }
-            } else stringFileWriter(filePath, inputCheck);
-
-            {
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }
 
 

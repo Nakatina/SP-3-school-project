@@ -27,7 +27,7 @@ public int chooseWatchOrAdd(){
     public double getRating() { return rating; }
     public String getCategory() { return category; }
 
-    public abstract void play(); // Play method to be overridden
+    public abstract void play(String medie); // Play method to be overridden
 }
 
 
