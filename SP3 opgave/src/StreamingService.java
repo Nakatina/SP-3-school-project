@@ -50,8 +50,8 @@ public class StreamingService {
             String ratingString = (parts.length > 3) ? parts[3].trim() : "Ukendt rating";
             double rating = Double.parseDouble(ratingString.replaceAll(",", "."));
 
-            Movie movie = new Movie(title, year, rating, category);
-            mediaLibrary.add(movie);
+            // Movie movie = new Movie(title, year, rating, category);
+            // mediaLibrary.add(movie);
         }
     }
 

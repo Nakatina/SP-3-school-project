@@ -13,28 +13,31 @@ import java.util.ArrayList;
 public class User {
     private ArrayList<Movie> watchedList = new ArrayList<>();
     private ArrayList<Movie> watchLaterList = new ArrayList<>();
-    TextUI ui = new TextUI();
-    FileHandler fileHandler = new FileHandler();
-    private String username;
-    private String password;
-    Path filePath = fileHandler.getFile("SP3 opgave/", "data/", "users.txt");
 
-    public User(FileHandler fh) {
-    }
-    public User(String username, String password) {
+    private static final TextUI ui = new TextUI();
+    private final FileHandler fh;
+    private final String username;
+    private String password;
+
+
+    public User(FileHandler fh, String username, String password) {
         this.username = username;
         this.password = password;
+        this.fh = fh;
     }
 
     public void createUserFiles(String nameOfUser) {
 
-        Path watchedFilePath = fileHandler.getFile("SP3 opgave/", "data/", "userdata/", nameOfUser, "watched movies.txt");
-        Path watchLaterFilePath = fileHandler.getFile("SP3 opgave/", "data/", "userdata/", nameOfUser, "watch later movies.txt");
-        fileHandler.createFileAndPath(watchedFilePath);
-        fileHandler.createFileAndPath(watchLaterFilePath);
+        Path watchedFilePath = fh.getFile("SP3 opgave/", "data/", "userdata/", nameOfUser, "watched movies.txt");
+        Path watchLaterFilePath = fh.getFile("SP3 opgave/", "data/", "userdata/", nameOfUser, "watch later movies.txt");
+        fh.createFileAndPath(watchedFilePath);
+        fh.createFileAndPath(watchLaterFilePath);
     }
 
-    public boolean createUsernameAndPassword(String username, String password, FileHandler fh) {
+    public static boolean createUsernameAndPassword(String username, String password, FileHandler fh) {
+
+        Path filePath = fh.getFile("SP3 opgave/", "data/", "users.txt");
+
         String usernameAndPassword = username + ";" + password;
         if (!fh.stringFileWriter(filePath, usernameAndPassword)) {
             ui.displayMsg("Noget gik galt ved oprettelse af bruger");
@@ -50,7 +53,9 @@ public class User {
 
     }
 
-    public boolean authenticateUser(String username, String password, FileHandler fh) {
+    public static boolean authenticateUser(String username, String password, FileHandler fh) {
+
+        Path filePath = fh.getFile("SP3 opgave/", "data/", "users.txt");
 
         return fh.checkMatchFile(filePath, 0, username, 1, password, 2);
     }
@@ -58,11 +63,11 @@ public class User {
     public String getUsername() {
         return username;
     }
-
+    /*
     public void setUsername(String username) {
         this.username = username;
     }
-
+*/
     public String getPassword() {
         return password;
     }

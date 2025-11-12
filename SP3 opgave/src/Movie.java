@@ -6,7 +6,6 @@ public class Movie extends Media {
     private final TextUI textUI = new TextUI();
     private final FileHandler fh;
     private final User user;
-    Path filePathFilm = fh.getFile("SP3 opgave/" + "data/" + "film.txt");
     int duration; //filmens længde
     String username;
 
@@ -18,31 +17,35 @@ public class Movie extends Media {
         this.fh = fh;
         this.user = user;
     }
-    public Movie(FileHandler fh, User user){
+
+    public Movie(FileHandler fh, User user) {
         this.fh = fh;
         this.user = user;
 
     }
+
     public void doMovie() {
         String chosenMovie = textUI.promptText("Hvilken film vil du se?");
-
+        Path filePathFilm = fh.getFile("SP3 opgave/" + "data/" + "film.txt");
         if (fh.checkFile(filePathFilm, chosenMovie, 4, 0)) {
             var choice = chooseWatchOrAdd();
             if (choice == 1) {
                 textUI.displayMsg(chosenMovie + " afspilles nu...");
+                addMovieToFiles(fh.getFile(), chosenMovie, "watched movies.txt");
             } else if (choice == 2) {
                 textUI.displayMsg("Film tilføjet til se senere!");
-                addMovieToFiles(fh.getFile(), chosenMovie);
+                addMovieToFiles(fh.getFile(), chosenMovie, "watch later movies.txt");
                 //Tilføj film til Watch Later fil
             }
         } else {
             textUI.displayMsg("Filmen findes ikke");
         }
 
-        }
-    private void addMovieToFiles(Path filePathFilm, String title) {
-        Path path = fh.getFile("SP3 opgave", "data", "userdata",user.getUsername(), "watch later movies.txt");
-    fileHandler.stringFileWriter(path, title);
+    }
+
+    private void addMovieToFiles(Path filePathFilm, String title, String file) {
+        Path path = fh.getFile("SP3 opgave", "data", "userdata", user.getUsername(), file);
+        fileHandler.stringFileWriter(path, title);
     }
 
     @Override

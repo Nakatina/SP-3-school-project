@@ -9,11 +9,9 @@ import java.nio.file.Path;
 public class ConsoleApp {
     private TextUI ui = new TextUI();
     private FileHandler fh = new FileHandler();
-    private User u = new User(fh);
-    private StreamingService Fletnix = new StreamingService();
-    private Movie m = new Movie(fh);
     private User user;
     private Movie movie;
+    private StreamingService Fletnix = new StreamingService();
     Path filePathFilm = fh.getFile("SP3 opgave/" + "data/" + "film.txt");
 
     public void startProgram() {
@@ -27,7 +25,7 @@ public class ConsoleApp {
     }
 
     private void doCategoryOrMovie() {
-        int choice = ui.promptNumeric("1. Vælg kategori", "2. Søg efter film", "3. Afslut");
+        int choice = ui.promptNumeric("\n1. Vælg kategori", "2. Søg efter film", "3. Afslut");
         while ((choice != 1) && (choice != 2) && (choice != 3)) {
             ui.displayMsg("Indtast korrekt valg: ");
         }
@@ -35,7 +33,7 @@ public class ConsoleApp {
             doCategory();
         }
         if (choice == 2) {
-            m.doMovie();
+            movie.doMovie();
         }
         return;
 
@@ -74,9 +72,10 @@ public class ConsoleApp {
         String usernameInput = ui.promptText("Skriv brugernavn");
         String passwordInput = ui.promptText("Skriv adgangskode");
 
-        if (u.authenticateUser(usernameInput, passwordInput, fh)) {
+        if (User.authenticateUser(usernameInput, passwordInput, fh)) {
             ui.displayMsg("Login successful!");
             createNewUserAndMovie(usernameInput, passwordInput);
+            user.createUserFiles(usernameInput);
             return true;
         }
         ui.displayMsg("Brugernavn eller password forkert!");
@@ -84,8 +83,8 @@ public class ConsoleApp {
     }
 
     private void createNewUserAndMovie(String username, String password) {
-        User user = new User(username, password);
-        Movie movie = new Movie(user);
+        this.user = new User(fh, username, password);
+        this.movie = new Movie(fh, user);
     }
 
     public void doSearch() {
@@ -108,10 +107,9 @@ public class ConsoleApp {
     private boolean doRegister() {
         String usernameInput = ui.promptText("Opret brugernavn");
         String passwordInput = ui.promptText("Opret adgangskode");
-        boolean b = u.createUsernameAndPassword(usernameInput, passwordInput, fh);
+        boolean b = User.createUsernameAndPassword(usernameInput, passwordInput, fh);
         if (b) {
             ui.displayMsg("Register succesfuld!");
-            u.createUserFiles(usernameInput);
             return doLogin();
         } else ui.displayMsg("Noget gik galt med registrering.");
         return false;
